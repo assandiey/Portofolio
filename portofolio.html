@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assane Dieye — Systèmes informatiques &amp; électroniques</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-900:#0b1226;
+    --navy-800:#121b34;
+    --paper:#f5f6fa;
+    --card:#ffffff;
+    --ink:#131b2e;
+    --ink-soft:#5c6785;
+    --line:#e3e6ef;
+    --copper:#e2793b;
+    --copper-dark:#c15f26;
+    --led-green:#17c787;
+    --led-blue:#3e8ef7;
+    --led-amber:#ffb300;
+    --led-pink:#f1418c;
+    --radius:14px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    font-family:'Inter', Arial, sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+  }
+
+  h1,h2,h3{
+    font-family:'Space Grotesk', 'Inter', sans-serif;
+    margin:0 0 .4em;
+    letter-spacing:-.01em;
+  }
+
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  a{ color:inherit; }
+
+  :focus-visible{
+    outline:3px solid var(--led-blue);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 32px;
+    background:rgba(11,18,38,.92);
+    backdrop-filter:blur(8px);
+    color:#fff;
+  }
+
+  .nav-brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono', monospace;
+    font-weight:600; letter-spacing:.04em; font-size:14px;
+  }
+
+  .nav-brand .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--led-green);
+    box-shadow:0 0 8px var(--led-green);
+  }
+
+  .nav-links{
+    display:flex; gap:26px; list-style:none; margin:0; padding:0;
+    font-family:'JetBrains Mono', monospace; font-size:13px;
+  }
+
+  .nav-links a{
+    text-decoration:none; color:#c7cde0; position:relative;
+    padding-bottom:4px; transition:color .2s;
+  }
+
+  .nav-links a::after{
+    content:""; position:absolute; left:0; bottom:0;
+    width:0%; height:2px; background:var(--copper);
+    transition:width .25s ease;
+  }
+
+  .nav-links a:hover{ color:#fff; }
+  .nav-links a:hover::after{ width:100%; }
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    position:relative;
+    background:radial-gradient(ellipse at top right, var(--navy-800), var(--navy-900) 70%);
+    color:#fff;
+    padding:90px 32px 110px;
+    overflow:hidden;
+  }
+
+  .circuit-bg{ position:absolute; inset:0; opacity:.35; pointer-events:none; }
+
+  .hero-inner{
+    position:relative; max-width:1080px; margin:0 auto;
+    display:flex; align-items:center; gap:56px; flex-wrap:wrap;
+  }
+
+  .hero-text{ flex:1 1 380px; }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono', monospace; font-size:12px;
+    letter-spacing:.12em; text-transform:uppercase;
+    color:var(--led-amber);
+    background:rgba(255,179,0,.1);
+    border:1px solid rgba(255,179,0,.3);
+    padding:6px 12px; border-radius:20px; margin-bottom:22px;
+  }
+
+  header.hero h1{ font-size:clamp(34px, 5vw, 52px); line-height:1.08; }
+  header.hero h1 span{ color:var(--copper); }
+
+  header.hero .role{
+    font-family:'JetBrains Mono', monospace;
+    color:#aab4d4; font-size:15.5px; margin-bottom:18px;
+  }
+
+  header.hero p.desc{ color:#c7cde0; max-width:540px; margin-bottom:32px; }
+
+  .hero-cta{ display:flex; gap:14px; flex-wrap:wrap; }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 24px; border-radius:10px; text-decoration:none;
+    font-weight:600; font-size:14px;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+
+  .btn-primary{ background:var(--copper); color:#fff; box-shadow:0 8px 20px -6px rgba(226,121,59,.6); }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 12px 24px -6px rgba(226,121,59,.7); }
+  .btn-ghost{ background:transparent; border:1px solid rgba(255,255,255,.25); color:#fff; }
+  .btn-ghost:hover{ background:rgba(255,255,255,.08); transform:translateY(-2px); }
+
+  /* ---------- IC-CHIP PHOTO FRAME (signature element) ---------- */
+  .chip-wrap{ flex:0 0 auto; position:relative; }
+
+  @keyframes halo-pulse{
+    0%,100%{ opacity:.55; transform:scale(1); }
+    50%{ opacity:.9; transform:scale(1.04); }
+  }
+
+  .chip-wrap::before{
+    content:"";
+    position:absolute;
+    inset:-18px;
+    border-radius:28px;
+    background:radial-gradient(circle, rgba(226,121,59,.35), transparent 70%);
+    opacity:.55;
+    z-index:-1;
+    animation:halo-pulse 3.6s ease-in-out infinite;
+  }
+
+  .chip{
+    position:relative;
+    width:172px; height:194px;
+    border-radius:16px;
+    padding:3px;
+    background:linear-gradient(135deg, var(--copper), var(--led-blue) 45%, var(--led-green) 100%);
+    box-shadow:0 20px 40px -12px rgba(0,0,0,.6);
+    transition:transform .4s ease, box-shadow .4s ease;
+  }
+
+  .chip-wrap:hover .chip{
+    transform:translateY(-4px);
+    box-shadow:0 26px 50px -12px rgba(0,0,0,.65), 0 0 24px -4px rgba(226,121,59,.5);
+  }
+
+  .chip::before{
+    content:""; position:absolute; top:-8px; left:50%; transform:translateX(-50%);
+    width:16px; height:16px; background:var(--navy-900);
+    border:1px solid rgba(255,255,255,.15); border-radius:50%;
+  }
+
+  .chip-inner{
+    position:relative;
+    width:100%; height:100%;
+    border-radius:13px;
+    background:linear-gradient(160deg,#1b2547,#0e1730);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    padding:8px;
+  }
+
+  .chip .profile-photo{
+    width:100%; height:100%;
+    object-fit:cover;
+    border-radius:9px;
+    display:block;
+    border:none;
+  }
+
+  .pins{ position:absolute; top:22px; display:flex; flex-direction:column; gap:16px; }
+  .pins.left{ left:-14px; }
+  .pins.right{ right:-14px; }
+
+  .pin{ width:14px; height:6px; background:linear-gradient(90deg,#8a92ab,#c7cde0); border-radius:2px; }
+  .pin.lit{ background:var(--led-green); box-shadow:0 0 8px var(--led-green); }
+
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
+  .pulse{ animation:pulse 2.6s ease-in-out infinite; }
+
+  /* ---------- SECTIONS ---------- */
+  main{ max-width:1080px; margin:0 auto; padding:0 32px; }
+  section{ padding:76px 0; }
+
+  .section-head{ margin-bottom:40px; }
+
+  .section-head .tag{
+    font-family:'JetBrains Mono', monospace; font-size:12px;
+    letter-spacing:.12em; text-transform:uppercase;
+    color:var(--copper-dark); display:block; margin-bottom:10px;
+  }
+
+  .section-head h2{ font-size:28px; }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    gap:32px;
+    align-items:start;
+  }
+
+  .about-grid p{ color:var(--ink-soft); margin-bottom:14px; }
+
+  .about-side{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+  }
+
+  .about-side h3{ font-size:14px; text-transform:uppercase; letter-spacing:.08em; font-family:'JetBrains Mono', monospace; color:var(--ink-soft); margin-bottom:14px; }
+
+  .about-side ul{ list-style:none; margin:0; padding:0; }
+  .about-side li{ display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px dashed var(--line); font-size:14px; }
+  .about-side li:last-child{ border-bottom:none; }
+  .about-side li span:last-child{ color:var(--ink-soft); font-family:'JetBrains Mono', monospace; font-size:13px; }
+
+  @media(max-width:760px){ .about-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(230px,1fr)); gap:20px; }
+
+  .skill-module{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:22px; position:relative; overflow:hidden;
+  }
+
+  .skill-module::before{ content:""; position:absolute; top:0; left:0; width:4px; height:100%; background:var(--accent, var(--copper)); }
+
+  .skill-module .led{
+    width:9px; height:9px; border-radius:50%; background:var(--accent, var(--copper));
+    box-shadow:0 0 6px var(--accent, var(--copper)); display:inline-block; margin-right:8px;
+  }
+
+  .skill-module h3{ font-size:16px; display:flex; align-items:center; margin-bottom:12px; }
+  .skill-module ul{ list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px; }
+  .skill-module li{
+    font-family:'JetBrains Mono', monospace; font-size:12px; background:var(--paper);
+    border:1px solid var(--line); padding:5px 10px; border-radius:6px; color:var(--ink-soft);
+  }
+
+  .langues-line{
+    margin-top:22px; font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--ink-soft);
+  }
+  .langues-line strong{ color:var(--ink); }
+
+  /* ---------- PARCOURS (timeline) ---------- */
+  .timeline{ position:relative; padding-left:26px; border-left:2px solid var(--line); }
+
+  .timeline-item{ position:relative; padding-bottom:32px; }
+  .timeline-item:last-child{ padding-bottom:0; }
+
+  .timeline-item::before{
+    content:""; position:absolute; left:-32px; top:2px;
+    width:12px; height:12px; border-radius:50%;
+    background:var(--card); border:3px solid var(--accent, var(--copper));
+  }
+
+  .timeline-item .date{
+    font-family:'JetBrains Mono', monospace; font-size:12px;
+    color:var(--accent, var(--copper)); text-transform:uppercase; letter-spacing:.06em;
+    display:block; margin-bottom:6px;
+  }
+
+  .timeline-item h3{ font-size:17px; margin-bottom:4px; }
+  .timeline-item .org{ color:var(--ink-soft); font-size:14px; margin-bottom:8px; }
+  .timeline-item ul{ margin:8px 0 0; padding-left:18px; color:var(--ink-soft); font-size:14px; }
+  .timeline-item li{ margin-bottom:4px; }
+
+  /* ---------- RÉALISATIONS ACADÉMIQUES ---------- */
+  .academic-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:24px; }
+
+  .academic-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:26px; position:relative; overflow:hidden;
+  }
+
+  .academic-card::before{ content:""; position:absolute; top:0; left:0; width:4px; height:100%; background:var(--accent, var(--copper)); }
+
+  .academic-card h3{
+    font-size:17px; display:flex; align-items:center; margin-bottom:10px;
+  }
+
+  .academic-card h3 .led{
+    width:9px; height:9px; border-radius:50%; background:var(--accent, var(--copper));
+    box-shadow:0 0 6px var(--accent, var(--copper)); display:inline-block; margin-right:8px;
+  }
+
+  .academic-card .tools{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+  .academic-card .tools span{
+    font-family:'JetBrains Mono', monospace; font-size:11.5px; background:var(--paper);
+    border:1px solid var(--line); padding:4px 9px; border-radius:5px; color:var(--ink-soft);
+  }
+
+  .academic-card ul{ margin:0; padding-left:18px; color:var(--ink-soft); font-size:14px; }
+  .academic-card li{ margin-bottom:9px; }
+  .academic-card li:last-child{ margin-bottom:0; }
+
+  /* ---------- PROJECTS ---------- */
+  .projects-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(360px,1fr)); gap:26px; }
+
+  .project-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    overflow:hidden;
+    transition:transform .2s ease, box-shadow .2s ease;
+    position:relative;
+  }
+
+  .project-card:hover{ transform:translateY(-4px); box-shadow:0 16px 32px -14px rgba(19,27,46,.25); }
+
+  /* --- Carrousel média (images et/ou vidéo) --- */
+  .project-media{
+    position:relative;
+    overflow:hidden;
+    aspect-ratio:1/1;
+    background:var(--navy-900);
+  }
+
+  .media-track{
+    display:flex;
+    height:100%;
+    transition:transform .6s cubic-bezier(.65,0,.35,1);
+  }
+
+  .project-media .project-img,
+  .project-media .project-video{
+    flex:0 0 100%;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  .media-dots{
+    position:absolute;
+    left:0; right:0; bottom:12px;
+    display:flex; justify-content:center; gap:7px;
+    z-index:2;
+  }
+
+  .media-dots span{
+    width:7px; height:7px; border-radius:50%;
+    background:rgba(255,255,255,.5);
+    cursor:pointer;
+    transition:background .2s ease, transform .2s ease;
+  }
+
+  .media-dots span:hover{ background:rgba(255,255,255,.8); }
+  .media-dots span.active{ background:#fff; transform:scale(1.3); }
+
+  .project-media.has-media-dots::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:0; height:56px;
+    background:linear-gradient(to top, rgba(0,0,0,.4), transparent);
+    pointer-events:none;
+  }
+
+  .project-media .project-img{
+    cursor:zoom-in;
+    transition:transform .35s ease;
+  }
+  .project-media .project-img:hover{ transform:scale(1.04); }
+
+  /* --- Flèches de navigation manuelle --- */
+  .media-arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:38px; height:38px;
+    border-radius:50%;
+    background:rgba(11,18,38,.55);
+    border:1px solid rgba(255,255,255,.35);
+    color:#fff;
+    font-size:20px;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    z-index:3;
+    transition:background .2s ease, transform .2s ease;
+  }
+
+  .media-arrow:hover{ background:rgba(11,18,38,.8); }
+  .media-arrow:active{ transform:translateY(-50%) scale(.9); }
+  .media-arrow.prev{ left:10px; }
+  .media-arrow.next{ right:10px; }
+
+  /* ---------- LIGHTBOX (agrandissement des photos) ---------- */
+  .lightbox-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(11,18,38,.92);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .25s ease;
+    z-index:1000;
+  }
+
+  .lightbox-overlay.active{ opacity:1; visibility:visible; }
+
+  .lightbox-img{
+    max-width:92vw;
+    max-height:88vh;
+    border-radius:10px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.6);
+  }
+
+  .lightbox-close{
+    position:absolute;
+    top:20px; right:24px;
+    width:44px; height:44px;
+    border-radius:50%;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.25);
+    color:#fff;
+    font-size:24px;
+    line-height:1;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:background .2s ease;
+  }
+
+  .lightbox-close:hover{ background:rgba(255,255,255,.18); }
+
+  .project-body{ padding:24px; }
+
+  .connector{ display:flex; gap:4px; margin-bottom:14px; }
+  .connector span{ width:8px; height:8px; border-radius:1px; background:var(--line); }
+  .connector span.on{ background:var(--accent, var(--copper)); }
+
+  .project-card .cat{
+    font-family:'JetBrains Mono', monospace; font-size:11px; text-transform:uppercase;
+    letter-spacing:.08em; color:var(--accent, var(--copper)); margin-bottom:8px; display:block;
+  }
+
+  .project-card h3{ font-size:18px; margin-bottom:8px; }
+  .project-card p{ color:var(--ink-soft); font-size:14px; margin-bottom:14px; }
+
+  .tech-tags{ display:flex; flex-wrap:wrap; gap:8px; }
+  .tech-tags span{
+    font-family:'JetBrains Mono', monospace; font-size:11.5px; background:var(--paper);
+    border:1px solid var(--line); padding:4px 9px; border-radius:5px; color:var(--ink-soft);
+  }
+
+  /* ---------- CONTACT ---------- */
+  #contact{ text-align:center; }
+
+  .connector-strip{ display:flex; justify-content:center; flex-wrap:wrap; gap:18px; margin-top:20px; }
+
+  .pin-contact{
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:20px 26px; min-width:170px; position:relative;
+  }
+
+  .pin-contact::before{
+    content:""; position:absolute; top:-6px; left:50%; transform:translateX(-50%);
+    width:10px; height:10px; border-radius:50%;
+    background:var(--accent, var(--copper)); box-shadow:0 0 8px var(--accent, var(--copper));
+  }
+
+  .pin-contact .label{
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-soft); display:block; margin-bottom:6px;
+  }
+
+  .pin-contact a, .pin-contact span.value{ text-decoration:none; font-weight:600; font-size:14.5px; color:var(--ink); }
+  .pin-contact a:hover{ color:var(--copper-dark); }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--navy-900); color:#8892b0; text-align:center;
+    padding:28px; font-family:'JetBrains Mono', monospace; font-size:12.5px;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:720px){
+    nav{ padding:14px 20px; }
+    .nav-links{ display:none; }
+    header.hero{ padding:64px 20px 80px; text-align:center; }
+    .hero-inner{ flex-direction:column-reverse; }
+    .hero-cta{ justify-content:center; }
+    header.hero p.desc{ margin-left:auto; margin-right:auto; }
+    main{ padding:0 20px; }
+    section{ padding:52px 0; }
+    .project-media{ aspect-ratio:1/1; }
+  }
+
+
+
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span class="dot pulse"></span> A.DIEYE </span></div>
+  <ul class="nav-links">
+    <li><a href="#accueil">Accueil</a></li>
+    <li><a href="#apropos">À propos</a></li>
+    <li><a href="#competences">Compétences</a></li>
+    <li><a href="#projets">Projets</a></li>
+    <li><a href="#realisations">Réalisations</a></li>
+    <li><a href="#parcours">Parcours</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="accueil">
+  <svg class="circuit-bg" viewBox="0 0 1080 480" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#3e8ef7" stroke-width="1.5" fill="none" opacity="0.5">
+      <path d="M0 80 H220 V160 H420"/>
+      <path d="M0 300 H140 V220 H360 V300 H620"/>
+      <path d="M1080 60 H860 V140 H700"/>
+      <path d="M1080 380 H900 V300 H700 V380 H520"/>
+      <path d="M520 0 V90"/>
+      <path d="M760 480 V400"/>
+    </g>
+    <g fill="#e2793b">
+      <circle cx="420" cy="160" r="4"/>
+      <circle cx="620" cy="300" r="4"/>
+      <circle cx="700" cy="140" r="4"/>
+      <circle cx="520" cy="380" r="4"/>
+    </g>
+    <g fill="#17c787">
+      <circle cx="220" cy="80" r="3.5" class="pulse"/>
+      <circle cx="900" cy="380" r="3.5" class="pulse"/>
+    </g>
+  </svg>
+
+  <div class="hero-inner">
+    <div class="hero-text">
+      <span class="eyebrow">●  disponible pour stage / emploi</span>
+      <h1>Bonjour, je suis <span>Assane Dieye</span></h1>
+      <div class="role mono">B.Sc.A. en Systèmes informatiques &amp; électroniques — UQAM</div>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#projets">Voir mes projets</a>
+        <a class="btn btn-ghost" href="#contact">Me contacter</a>
+      </div>
+    </div>
+
+    <div class="chip-wrap">
+      <div class="chip">
+        <div class="pins left">
+          <span class="pin lit"></span><span class="pin"></span><span class="pin lit"></span><span class="pin"></span>
+        </div>
+        <div class="pins right">
+          <span class="pin"></span><span class="pin lit"></span><span class="pin"></span><span class="pin lit"></span>
+        </div>
+        <div class="chip-inner">
+          <img class="profile-photo" src="images/photo.jpg" alt="Photo de Assane Dieye">
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section id="apropos">
+    <div class="section-head">
+      <h2>À propos</h2>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>Titulaire d'un Baccalauréat en systèmes informatiques et électroniques à l'UQAM, avec une expertise en conception de systèmes embarqués et connectés (IoT, électronique numérique/analogique, FPGA, VHDL, PCB) et en développement logiciel (Java, C++, SQL).</p>
+        <p>Expérience concrète en instrumentation, acquisition de données et interfaces de suivi énergétique, acquise à travers des projets académiques menés seul ou en équipe, en Agile/Scrum et en cascade.</p>
+        <p>Ponctuel, calme sous pression et à l'écoute des autres, une rigueur que je cultive aussi par la natation, le vélo et l'entraînement.</p>
+      </div>
+      <div class="about-side">
+        <h3>En bref</h3>
+        <ul>
+          <li><span>Lieu</span><span>Montréal, Canada</span></li>
+          <li><span>Formation</span><span>Bacc. Systèmes info. &amp; électro.</span></li>
+          <li><span>Établissement</span><span>UQAM</span></li>
+          <li><span>Diplôme</span><span>Obtenu — Août 2026</span></li>
+          <li><span>Français</span><span>Courant</span></li>
+          <li><span>Anglais</span><span>Notions de base</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="competences">
+    <div class="section-head">
+      <h2>Compétences</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-module" style="--accent:var(--led-green)">
+        <h3><span class="led"></span>Systèmes embarqués &amp; FPGA</h3>
+        <ul>
+          <li>VHDL</li>
+          <li>STM32CubeIDE</li>
+          <li>Vivado</li>
+          <li>ModelSim</li>
+          <li>PSoC Creator</li>
+          <li>Keil</li>
+          <li>Arduino IDE</li>
+        </ul>
+      </div>
+      <div class="skill-module" style="--accent:var(--copper-light)">
+        <h3><span class="led"></span>Électronique &amp; simulation</h3>
+        <ul>
+          <li>LTSpice</li>
+          <li>HSpice</li>
+          <li>MATLAB</li>
+          <li>Cadence</li>
+          <li>COMSOL Multiphysics</li>
+          <li>Conception PCB</li>
+        </ul>
+      </div>
+            <div class="skill-module" style="--accent:var(--copper)">
+        <h3><span class="led"></span>Fabrication &amp; prototypage </h3>
+        <ul>
+          <li>Soudure électronique</li>
+          <li>Assemblage de circuits/composants</li>
+        </ul>
+      </div>
+      <div class="skill-module" style="--accent:var(--led-blue)">
+        <h3><span class="led"></span>Programmation &amp; base de données</h3>
+        <ul>
+          <li>Java</li>
+          <li>C++</li>
+          <li>Python</li>
+          <li>SQL</li>
+          <li>Assembleur (RISC-V)</li>
+        </ul>
+      </div>
+      <div class="skill-module" style="--accent:var(--led-pink)">
+        <h3><span class="led"></span>Réseaux</h3>
+        <ul>
+          <li>Cisco Packet Tracer</li>
+          <li>Wireshark</li>
+        </ul>
+      </div>
+
+      <div class="skill-module" style="--accent:var(--led-amber)">
+        <h3><span class="led"></span>Développement &amp; outils</h3>
+        <ul>
+          <li>Visual Studio Code</li>
+          <li>Eclipse</li>
+          <li>NetBeans</li>
+          <li>IntelliJ</li>
+          <li>Oracle / SQL Developer</li>
+          <li>Git</li>
+          <li>Trello</li>
+        </ul>
+      </div>
+
+      <div class="skill-module" style="--accent:var(--copper-dark)">
+        <h3><span class="led"></span>Bureautique &amp; documentation</h3>
+        <ul>
+          <li>Microsoft Office (Outlook, Word, Excel, Visio)</li>
+          <li>Overleaf</li>
+          <li>Visual Paradigm</li>
+        </ul>
+      </div>
+
+    </div>
+    <p class="langues-line"><strong>Méthodologies :</strong> Agile · Scrum · Cascade &nbsp;|&nbsp; <strong>OS :</strong> Windows · macOS · Linux</p>
+  </section>
+
+  <section id="projets">
+    <div class="section-head">
+      <h2>Projets techniques</h2>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card" style="--accent:var(--led-green)">
+        <div class="project-media">
+          <div class="media-track">
+            <img class="project-img" src="images/projects/drone.jpg" alt="Drone automatisé AgriDrone AI">
+            <img class="project-img" src="images/projects/drone1.png" alt="Drone automatisé AgriDrone AI">
+            <img class="project-img" src="images/projects/app1.png" alt="Drone automatisé AgriDrone AI">
+            <video class="project-video" muted loop playsinline autoplay controls poster="images/projects/fpga-poster.jpg">
+              <source src="images/projects/drone.mp4" type="video/mp4">
+              Ton navigateur ne supporte pas la lecture vidéo.
+            </video>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="connector"><span class="on"></span><span class="on"></span><span></span><span></span></div>
+          <span class="cat">Systèmes embarqués &amp; IA</span>
+          <h3>Drone automatisé — AgriDrone AI</h3>
+          <p>Un drone autonome survole les parcelles agricoles pour capter des images thermiques et repérer les zones de stress hydrique ou de maladie des cultures. Les données sont ensuite analysées par un modèle d'IA et présentées dans une application dédiée, offrant un diagnostic rapide sans intervention manuelle.</p>
+          <div class="tech-tags"><span>IoT</span><span>Thermographie</span><span>IA</span></div>
+        </div>
+      </div>
+
+      <div class="project-card" style="--accent:var(--copper)">
+        <div class="project-media">
+          <div class="media-track">
+            <img class="project-img" src="images/projects/multiprise1.png" alt="Multiprise intelligente connectée">
+            <img class="project-img" src="images/projects/multiprise2.png" alt="Multiprise intelligente connectée">
+            <img class="project-img" src="images/projects/multiprise.png" alt="Multiprise intelligente connectée">
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="connector"><span class="on"></span><span></span><span class="on"></span><span></span></div>
+          <span class="cat">Électronique &amp; IoT</span>
+          <h3>Multiprise intelligente</h3>
+          <p>Une multiprise connectée qui protège les appareils branchés (surtension, surcharge, court-circuit) tout en mesurant la consommation prise par prise. Programmable par plages horaires et pilotable depuis une interface web.</p>
+          <div class="tech-tags"><span>Sécurité électrique</span><span>Suivi énergétique</span><span>Interface web</span></div>
+        </div>
+      </div>
+
+      <div class="project-card" style="--accent:var(--copper)">
+        <div class="project-media">
+          <div class="media-track">
+            <img class="project-img" src="images/projects/alimentation.png" alt="Alimentation stabilisée 5V">
+            <img class="project-img" src="images/projects/alimentation1.png" alt="Alimentation stabilisée 5V">
+            <video class="project-video" muted loop playsinline autoplay controls poster="images/projects/fpga-poster.jpg">
+              <source src="images/projects/alimentation.mp4" type="video/mp4">
+              Ton navigateur ne supporte pas la lecture vidéo.
+            </video>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="connector"><span></span><span class="on"></span><span></span><span></span></div>
+          <span class="cat">Électronique</span>
+          <h3>Alimentation stabilisée</h3>
+          <p>Circuit convertissant le 110V AC du secteur en 5V DC stable, en combinant redressement, filtrage et régulation. Simulé sous LTSpice avant montage, il fournit une tension continue propre, prête à alimenter des circuits électroniques sensibles.</p>
+          <div class="tech-tags"><span>Redressement</span><span>Régulation</span><span>LTSpice</span></div>
+        </div>
+      </div>
+
+      <div class="project-card" style="--accent:var(--led-blue)">
+        <div class="project-media">
+          <div class="media-track">
+            <video class="project-video" muted loop playsinline autoplay controls poster="images/projects/fpga-poster.jpg">
+              <source src="images/projects/fpga.mp4" type="video/mp4">
+              Ton navigateur ne supporte pas la lecture vidéo.
+            </video>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="connector"><span></span><span class="on"></span><span class="on"></span><span></span></div>
+          <span class="cat">FPGA &amp; numérique</span>
+          <h3>Course aux LED — système numérique sur FPGA</h3>
+          <p>Jeu de réflexes entièrement câblé en logique numérique sur carte FPGA Nexys Video : deux joueurs s'affrontent au bouton, et le numéro du gagnant s'affiche sur les afficheurs 7 segments. Chaque module a été conçu en VHDL et validé par des bancs d'essai sous ModelSim.</p>
+          <div class="tech-tags"><span>Vivado</span><span>ModelSim</span><span>VHDL</span></div>
+        </div>
+      </div>
+
+      <div class="project-card" style="--accent:var(--led-pink)">
+        <div class="project-media">
+          <div class="media-track">
+            <img class="project-img" src="images/projects/dacmontage.png" alt="Système d'acquisition de données DAQ — montage">
+            <img class="project-img" src="images/projects/dacsin.png" alt="Système d'acquisition de données DAQ — signal sinusoïdal">
+            <img class="project-img" src="images/projects/dacramp.png" alt="Système d'acquisition de données DAQ — signal rampe">
+            <img class="project-img" src="images/projects/daccarre.png" alt="Système d'acquisition de données DAQ — signal carré">
+            <img class="project-img" src="images/projects/similationacq.png" alt="Système d'acquisition de données DAQ — simulation">
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="connector"><span class="on"></span><span></span><span></span><span class="on"></span></div>
+          <span class="cat">Traitement du signal</span>
+          <h3>Système d'acquisition de données (DAQ)</h3>
+          <p>Système d'acquisition miniature qui échantillonne des signaux analogiques (-5V à 5V) — sinusoïdaux, carrés, en rampe — grâce à un microcontrôleur, puis les transmet à une interface web pour un affichage en temps réel. Un exercice complet d'instrumentation, du capteur jusqu'à la visualisation.</p>
+          <div class="tech-tags"><span>GPIO / UART</span><span>Web temps réel</span></div>
+        </div>
+      </div>
+
+      <div class="project-card" style="--accent:var(--led-blue)">
+        <div class="project-media">
+          <div class="media-track">
+            <img class="project-img" src="images/projects/capteur3.png" alt="Capteur de vibration MEMS">
+            <img class="project-img" src="images/projects/capteur4.png" alt="Capteur de vibration MEMS">
+            <img class="project-img" src="images/projects/capteur5.png" alt="Capteur de vibration MEMS">
+            <img class="project-img" src="images/projects/capteur6.png" alt="Capteur de vibration MEMS">
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="connector"><span class="on"></span><span class="on"></span><span class="on"></span><span></span></div>
+          <span class="cat">Simulation &amp; MEMS</span>
+          <h3>Capteur de vibration MEMS</h3>
+          <p>Modélisation et simulation multiphysique d'un capteur de vibration MEMS à détection capacitive sous COMSOL. L'étude du comportement mécanique et électrique de la structure confirme une détection fiable des vibrations, une étape clé avant tout prototypage physique.</p>
+          <div class="tech-tags"><span>COMSOL</span><span>MEMS</span><span>Multiphysique</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="realisations">
+    <div class="section-head">
+      <h2>Réalisations académiques</h2>
+    </div>
+    <div class="academic-grid">
+      <div class="academic-card" style="--accent:var(--led-blue)">
+        <h3><span class="led"></span>Développement logiciel</h3>
+        <div class="tools"><span>Java</span><span>C++</span><span>SQL</span><span>Assembleur RISC-V</span></div>
+        <ul>
+          <li>Conception orientée objet et implémentation de règles d'affaires pour un système de gestion de projets ; types de données abstraits et programmation générique testés en JUnit ; traitement par streams et expressions lambda (Java).</li>
+          <li>Plateforme de publication/recherche de documents perdus (SQL Developer).</li>
+          <li>Tri chronologique de dates via liste doublement chaînée en RISC-V.</li>
+          <li>Manipulation de structures de données en C++.</li>
+        </ul>
+      </div>
+      <div class="academic-card" style="--accent:var(--led-pink)">
+        <h3><span class="led"></span>Traitement du signal &amp; systèmes embarqués</h3>
+        <div class="tools"><span>MATLAB</span><span>VHDL</span><span>HSpice</span><span>LTSpice</span><span>Cadence</span><span>COMSOL</span></div>
+        <ul>
+          <li>Filtres numériques (RIF/RII), analyse spectrale FFT, modulation analogique/numérique, conversion CAN/CNA, circuits MOSFET, amplificateurs et redresseurs.</li>
+          <li>Simulation multiphysique (COMSOL) de systèmes mécaniques et électriques.</li>
+          <li>Conception de circuits imprimés (PCB) et modélisation 3D.</li>
+          <li>Interfaçage de périphériques (claviers matriciels, écrans, capteurs, etc.) via protocoles GPIO, I2C, SPI et UART sur microcontrôleurs.</li>
+        </ul>
+      </div>
+      <div class="academic-card" style="--accent:var(--led-amber)">
+        <h3><span class="led"></span>Recherche</h3>
+        <div class="tools"><span>IEEE Xplore</span><span>Zotero</span></div>
+        <ul>
+          <li>Étude d'articles scientifiques et recherche appliquée sur les systèmes neuromorphiques.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="parcours">
+    <div class="section-head">
+      <h2>Expérience professionnelle</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item" style="--accent:var(--led-green)">
+        <span class="date">Septembre 2025 – Avril 2026 (8 mois)</span>
+        <h3>Auxiliaire d'enseignement</h3>
+        <div class="org">Université du Québec à Montréal, Montréal, Canada</div>
+        <p>Soutien pédagogique et technique aux étudiants, encadrement en laboratoire, correction de travaux et représentation du programme.</p>
+        <ul>
+          <li>MIC4101 — Électronique analogique et numérique</li>
+          <li>MIC3220 — Signaux et systèmes</li>
+          <li>MIC1117 — Électronique pratique et projet intégrateur</li>
+          <li>Surveillant d'examen — MAT2082</li>
+          <li>Représentant du programme (journée porte ouverte &amp; Université d'un jour)</li>
+          <li>Mentorat Défi Techno</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="formation">
+    <div class="section-head">
+      <h2>Formation</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item" style="--accent:var(--copper)">
+        <span class="date">Septembre 2023 – Août 2026</span>
+        <h3>Baccalauréat en systèmes informatiques et électroniques</h3>
+        <div class="org">Université du Québec à Montréal (UQAM), Montréal, Canada</div>
+      </div>
+      <div class="timeline-item" style="--accent:var(--led-blue)">
+        <span class="date">2021</span>
+        <h3>Diplôme d'études collégiales en sciences expérimentales</h3>
+        <div class="org">Lycée Galandou Diouf, Dakar, Sénégal</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-head">
+      <h2>Contact</h2>
+    </div>
+    <div class="connector-strip">
+      <div class="pin-contact" style="--accent:var(--led-green)">
+        <span class="label">Email</span>
+        <a href="mailto:diey.assan@gmail.com">diey.assan@gmail.com</a>
+      </div>
+      <div class="pin-contact" style="--accent:var(--led-amber)">
+        <span class="label">GitHub</span>
+        <a href="https://github.com/assandiey" target="_blank" rel="noopener">github.com/assandiey</a>
+      </div>
+      <div class="pin-contact" style="--accent:var(--led-green)">
+        <span class="label">LinkedIn</span>
+        <a href="https://www.linkedin.com/in/assane-dieye" target="_blank" rel="noopener">linkedin.com/in/assane-dieye</a>
+      </div>
+      <div class="pin-contact" style="--accent:var(--led-blue)">
+        <span class="label">Localisation</span>
+        <span class="value">Montréal, Canada</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2026 Assane Dieye — Systèmes informatiques &amp; électroniques, UQAM
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    document.querySelectorAll('.project-media').forEach(function (media) {
+      var track = media.querySelector('.media-track');
+      var slides = Array.prototype.slice.call(track.children);
+      if (slides.length <= 1) return; // une seule image/vidéo : pas besoin de navigation
+
+      media.classList.add('has-media-dots');
+
+      var index = 0;
+      var dots;
+
+      function goTo(i) {
+        index = (i + slides.length) % slides.length; // boucle dans les deux sens
+        track.style.transform = 'translateX(-' + (index * 100) + '%)';
+        Array.prototype.forEach.call(dots.children, function (dot, j) {
+          dot.classList.toggle('active', j === index);
+        });
+      }
+
+      dots = document.createElement('div');
+      dots.className = 'media-dots';
+      slides.forEach(function (_, i) {
+        var dot = document.createElement('span');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', function () { goTo(i); });
+        dots.appendChild(dot);
+      });
+      media.appendChild(dots);
+
+      var prevBtn = document.createElement('button');
+      prevBtn.type = 'button';
+      prevBtn.className = 'media-arrow prev';
+      prevBtn.setAttribute('aria-label', 'Image précédente');
+      prevBtn.innerHTML = '&#8249;';
+      prevBtn.addEventListener('click', function () { goTo(index - 1); });
+      media.appendChild(prevBtn);
+
+      var nextBtn = document.createElement('button');
+      nextBtn.type = 'button';
+      nextBtn.className = 'media-arrow next';
+      nextBtn.setAttribute('aria-label', 'Image suivante');
+      nextBtn.innerHTML = '&#8250;';
+      nextBtn.addEventListener('click', function () { goTo(index + 1); });
+      media.appendChild(nextBtn);
+    });
+
+    /* ---------- Lightbox : agrandir une photo au clic ---------- */
+    var overlay = document.createElement('div');
+    overlay.className = 'lightbox-overlay';
+    overlay.innerHTML = '<button class="lightbox-close" aria-label="Fermer l\'image agrandie">&times;</button><img class="lightbox-img" alt="">';
+    document.body.appendChild(overlay);
+
+    var lightboxImg = overlay.querySelector('.lightbox-img');
+    var closeBtn = overlay.querySelector('.lightbox-close');
+
+    function openLightbox(src, alt) {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || '';
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closeLightbox();
+    });
+    closeBtn.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    document.querySelectorAll('.project-img').forEach(function (img) {
+      img.addEventListener('click', function () {
+        openLightbox(img.currentSrc || img.src, img.alt);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
